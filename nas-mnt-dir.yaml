@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  - name: install nfs client
+    action: apt pkg=nfs-common state=present    
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /mnt/k3s
+      state: directory
+      mode: '1777'
+      owner: jwatt
+  - name: Mount an NFS volume
+    ansible.posix.mount:
+      src: 192.168.1.120:/export/k3s
+      path: /mnt/k3s
+      opts: rw,sync,hard
+      state: mounted
+      fstype: nfs

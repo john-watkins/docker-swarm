@@ -1,0 +1,25 @@
+---
+
+- hosts: cube
+  become: true
+  tasks:
+    - name: Install Docker
+      shell: apt-get install docker.io -y; usermod -aG docker $USER; newgrp docker
+
+- hosts: control
+  become: true
+  tasks:
+    - name: Init swarm cluster
+      shell: docker swarm init --advertise-addr={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+      
+    - name: Retrieve token
+      shell: docker swarm join-token -q worker
+      register: worker_token
+
+- hosts: workers
+  become: true
+  vars:
+    token: "{{ hostvars[groups['control'][0]]['worker_token']['stdout'] }}"
+  tasks:
+    - name: Join workers
+      shell: docker swarm join --token {{ token }} {{ hostvars[groups['control'][0]]['ansible_default_ipv4']['address'] }}

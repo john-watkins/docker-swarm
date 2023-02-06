@@ -1,0 +1,34 @@
+api:
+  dashboard: true
+  debug: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+log:
+  level: ERROR
+  filePath: "/logs/traefik.log"
+  format: common
+
+serversTransport:
+  insecureSkipVerify: true
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    swarmMode: true
+    exposedByDefault: false
+  file:
+    filename: config.yml
+
+#certificatesResolvers:
+#  myresolver:
+#    acme:
+#      email: john.watkins@springdox.com
+#      storage: acme.json
+#      httpChallenge:
+        # used during the challenge
+#        entryPoint: web
