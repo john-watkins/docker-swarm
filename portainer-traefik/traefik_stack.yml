@@ -1,0 +1,33 @@
+version: '3.2'
+
+services:
+  traefik:
+    image: "traefik:latest"
+    network_mode: "host"
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker=true
+      - --providers.docker.swarmMode=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=public
+      - --api
+      - --log.level=DEBUG
+    ports:
+      - "80:80"
+      - "443:443"
+    deploy:
+      mode: replicated
+      replicas: 4
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - public
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /mnt/k3s/docker/traefik/traefik.yml:/traefik.yml:ro
+      - /mnt/k3s/docker/traefik/acme.json:/acme.json
+      - /mnt/k3s/docker/traefik/config.yml:/config.yml:ro
+      - /mnt/k3s/docker/traefik/logs:/logs  
