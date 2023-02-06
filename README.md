@@ -88,7 +88,17 @@ ansible-playbook ./nas-mnt-dir.yaml
   <summary>Install Traefik & Portainer</summary>
 
 #### In the playbook file ./portainer-traefik/traefik_portainer_swarm.yml
-- Adjust the NFS share paths in the volume definitions within the stack definition
+- Adjust the NFS share paths in the volume definitions within the stack.  Also, look at the host name for the portainer traefik definition, and adjust that to the local domain you setteled with...
+#### Run the playbook
+ansible-playbook ./portainer-traefik/traefik_portainer_swarm.yml
+
+</details>
+
+<details>
+  <summary>Install Elasticsearch</summary>
+
+#### In the playbook file ./portainer-traefik/traefik_portainer_swarm.yml
+- Adjust the NFS share paths in the volume definitions within the stack.  Also, look at the host name for the portainer traefik definition, and adjust that to the local domain you setteled with...
 #### Run the playbook
 ansible-playbook ./portainer-traefik/traefik_portainer_swarm.yml
 
