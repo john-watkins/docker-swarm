@@ -14,8 +14,7 @@ services:
       - xpack.security.transport.ssl.enabled=false
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0
-      - network.publish_host= _eth0_
+      - network.host=0.0.0.0      
     volumes:
       - /mnt/k3s/elasticsearch/es01/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es01/logs:/usr/share/elasticsearch/logs      
@@ -28,10 +27,7 @@ services:
         constraints:
           - "node.hostname==rp2.local"
     networks:
-      - elastic
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+      - elastic    
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.elasticsearch.entrypoints=web"
@@ -39,7 +35,6 @@ services:
       - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
       - "traefik.docker.network=public"
       - "traefik.http.routers.elasticsearch.service=es01"
-
   es02:
     hostname: es02
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -71,10 +66,7 @@ services:
     depends_on:
       - es01
     networks:
-      - elastic
-    ports:
-      - "9201:9200"
-      - "9301:9300"
+      - elastic    
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.elasticsearch.entrypoints=web"
@@ -82,7 +74,6 @@ services:
       - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
       - "traefik.docker.network=public"
       - "traefik.http.routers.elasticsearch.service=es02"
-
   es03:
     hostname: es03
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -114,10 +105,7 @@ services:
     depends_on:
       - es01
     networks:
-      - elastic
-    ports:
-      - "9202:9200"
-      - "9302:9300"
+      - elastic    
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.elasticsearch.entrypoints=web"
