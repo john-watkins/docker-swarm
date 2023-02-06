@@ -1,0 +1,5 @@
+- hosts: cube
+  become: true
+  tasks:
+    - name: Install Docker
+      shell: apt-get install docker.io -y; usermod -aG docker $USER; newgrp docker

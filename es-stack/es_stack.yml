@@ -1,0 +1,132 @@
+version: '3.8'
+services:  
+  es01:
+    hostname: es01
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - xpack.monitoring.collection.enabled=true
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - network.publish_host= _eth0_
+    volumes:
+      - /mnt/k3s/elasticsearch/es01/data:/usr/share/elasticsearch/data
+      - /mnt/k3s/elasticsearch/es01/logs:/usr/share/elasticsearch/logs      
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==rp2.local"
+    networks:
+      - elastic
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elasticsearch.entrypoints=web"
+      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+      - "traefik.docker.network=public"
+      - "traefik.http.routers.elasticsearch.service=es01"
+
+  es02:
+    hostname: es02
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - xpack.license.self_generated.type=trial
+      - xpack.monitoring.collection.enabled=true
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - network.publish_host= _eth0_
+    volumes:
+      - /mnt/k3s/elasticsearch/es02/data:/usr/share/elasticsearch/data
+      - /mnt/k3s/elasticsearch/es02/logs:/usr/share/elasticsearch/logs      
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==rp3.local"
+    depends_on:
+      - es01
+    networks:
+      - elastic
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elasticsearch.entrypoints=web"
+      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+      - "traefik.docker.network=public"
+      - "traefik.http.routers.elasticsearch.service=es02"
+
+  es03:
+    hostname: es03
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - xpack.license.self_generated.type=trial
+      - xpack.monitoring.collection.enabled=true
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - network.publish_host= _eth0_      
+    volumes:
+      - /mnt/k3s/elasticsearch/es03/data:/usr/share/elasticsearch/data
+      - /mnt/k3s/elasticsearch/es03/logs:/usr/share/elasticsearch/logs      
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==rp4.local"
+    depends_on:
+      - es01
+    networks:
+      - elastic
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elasticsearch.entrypoints=web"
+      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+      - "traefik.docker.network=public"
+      - "traefik.http.routers.elasticsearch.service=es03"
+
+networks:
+  elastic:
+    driver: overlay
+    external: false

@@ -1,0 +1,11 @@
+[control]
+rp1.local ansible_connection=local
+
+[workers]
+jwatt@rp2.local
+jwatt@rp3.local
+jwatt@rp4.local
+
+[cube:children]
+control
+workers
