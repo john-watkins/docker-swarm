@@ -26,15 +26,15 @@ services:
       placement:
         constraints:
           - "node.hostname==rp2.local"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.elasticsearch.entrypoints=web"
+        - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+        - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+        - "traefik.docker.network=public"
     networks:
       - elastic
-      - public        
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.elasticsearch.entrypoints=web"
-      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
-      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=public"      
+      - public            
   es02:
     hostname: es02
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -62,17 +62,17 @@ services:
       placement:
         constraints:
           - "node.hostname==rp3.local"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.elasticsearch.entrypoints=web"
+        - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+        - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+        - "traefik.docker.network=public"
     depends_on:
       - es01
     networks:
       - elastic
-      - public
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.elasticsearch.entrypoints=web"
-      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
-      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=public"      
+      - public          
   es03:
     hostname: es03
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -100,17 +100,17 @@ services:
       placement:
         constraints:
           - "node.hostname==rp4.local"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.elasticsearch.entrypoints=web"
+        - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
+        - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+        - "traefik.docker.network=public"
     depends_on:
       - es01
     networks:
       - elastic
-      - public   
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.elasticsearch.entrypoints=web"
-      - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
-      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=public"      
+      - public       
 
 networks:
   elastic:    
