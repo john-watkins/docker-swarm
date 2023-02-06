@@ -13,6 +13,7 @@ services:
         - "traefik.http.routers.cerebro.entrypoints=web"
         - "traefik.http.routers.cerebro.rule=Host(`cerebro.j5watt.local`)"
         - "traefik.http.services.cerebro.loadbalancer.server.port=9209"
+        - "traefik.docker.network=public"
     networks:      
       - public
 
