@@ -2,7 +2,7 @@ version: '3.8'
 
 services: 
   cerebro:
-    image: lmenezes/cerebro:latest
+    image: ghcr.io/rpardini/cerebro-docker:0
     volumes:
       - "/mnt/k3s/cerebro/cerebro_application.conf:/opt/cerebro/conf/application.conf"   
       - "/mnt/k3s/cerbero/cerbero.db:/var/lib/cerebro/cerebro.db" 
