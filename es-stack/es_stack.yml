@@ -27,7 +27,8 @@ services:
         constraints:
           - "node.hostname==rp2.local"
     networks:
-      - elastic    
+      - elastic
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.elasticsearch.entrypoints=web"
