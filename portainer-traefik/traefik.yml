@@ -9,8 +9,13 @@ entryPoints:
     address: ":443"
 
 log:
-  level: ERROR
+  level: DEBUG
   filePath: "/logs/traefik.log"
+  format: common
+
+accessLog:
+  filePath: "/logs/access.log"
+  bufferingSize: 100
   format: common
 
 serversTransport:
