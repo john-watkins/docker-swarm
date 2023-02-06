@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.elasticsearch.entrypoints=web"
       - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
       - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=elastic"      
+      - "traefik.docker.network=public"      
   es02:
     hostname: es02
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -72,7 +72,7 @@ services:
       - "traefik.http.routers.elasticsearch.entrypoints=web"
       - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
       - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=elastic"      
+      - "traefik.docker.network=public"      
   es03:
     hostname: es03
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
@@ -110,7 +110,7 @@ services:
       - "traefik.http.routers.elasticsearch.entrypoints=web"
       - "traefik.http.routers.elasticsearch.rule=Host(`es.j5watt.local`)"            
       - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
-      - "traefik.docker.network=elastic"      
+      - "traefik.docker.network=public"      
 
 networks:
   elastic:    
