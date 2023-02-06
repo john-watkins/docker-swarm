@@ -50,8 +50,7 @@ services:
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0
-      - network.publish_host= _eth0_
+      - network.host=0.0.0.0      
     volumes:
       - /mnt/k3s/elasticsearch/es02/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es02/logs:/usr/share/elasticsearch/logs      
@@ -89,8 +88,7 @@ services:
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0
-      - network.publish_host= _eth0_      
+      - network.host=0.0.0.0        
     volumes:
       - /mnt/k3s/elasticsearch/es03/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es03/logs:/usr/share/elasticsearch/logs      
