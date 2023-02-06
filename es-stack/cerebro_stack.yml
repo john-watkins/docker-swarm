@@ -3,11 +3,17 @@ version: '3.8'
 services: 
   cerebro:
     image: ghcr.io/rpardini/cerebro-docker:0
+    environment:
+      CEREBRO_PORT: 9209
     volumes:
       - "/mnt/k3s/cerebro/cerebro_application.conf:/opt/cerebro/conf/application.conf"   
-      - "/mnt/k3s/cerebro/cerbero.db:/var/lib/cerebro/cerebro.db" 
+      - "/mnt/k3s/cerebro/cerebro.db:/var/lib/cerebro/cerebro.db" 
       - "/mnt/k3s/cerebro/logs:/opt/cerebro/logs"
-    deploy:      
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.cerebro.entrypoints=web"
