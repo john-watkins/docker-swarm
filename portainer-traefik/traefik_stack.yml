@@ -27,7 +27,15 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /mnt/k3s/docker/traefik/traefik.yml:/traefik.yml:ro
-      - /mnt/k3s/docker/traefik/acme.json:/acme.json
-      - /mnt/k3s/docker/traefik/config.yml:/config.yml:ro
-      - /mnt/k3s/docker/traefik/logs:/logs  
+      - /mnt/k3s/traefik/traefik.yml:/traefik.yml:ro      
+      - /mnt/k3s/traefik/config.yml:/config.yml:ro
+      - /mnt/k3s/traefik/logs:/logs  
+
+networks:
+  public:
+    external: true
+  agent_network:
+    external: true
+
+volumes:
+   data:
