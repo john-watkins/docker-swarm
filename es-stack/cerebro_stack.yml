@@ -1,0 +1,21 @@
+version: '3.8'
+
+services: 
+  cerebro:
+    image: lmenezes/cerebro:latest
+    volumes:
+      - "/mnt/k3s/cerebro/cerebro_application.conf:/opt/cerebro/conf/application.conf"   
+      - "/mnt/k3s/cerbero/cerbero.db:/var/lib/cerebro/cerebro.db" 
+      - "/mnt/k3s/cerbero/logs:/opt/cerebro/logs"
+    deploy:      
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.cerebro.entrypoints=web"
+        - "traefik.http.routers.cerebro.rule=Host(`cerebro.j5watt.local`)"
+        - "traefik.http.services.cerebro.loadbalancer.server.port=9209"
+    networks:      
+      - public
+
+networks:  
+  public:    
+    external: true
