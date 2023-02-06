@@ -1,6 +1,11 @@
 # docker-swarm 4 node raspberry pi cluster
 
 ### Install headless raspberry pi os
+I used Raspberry PI OS Lite, and balenaEtchter to burn my microsd cards
+https://www.raspberrypi.com/software/operating-systems/
+- decent write up
+https://florianmuller.com/build-a-raspberry-pi-4-docker-swarm-cluster-with-four-nodes-and-deploy-traefik-with-portainer
+
 ### Configure router
 I have a linksys wrt3200acm router with dd-wrt.  Under services, give the raspberry pi's a static IP lease. [Your IP addresses will differ]
 ![Static Lease](./doc/images/dd-wrt-static-lease.png)
@@ -24,6 +29,7 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub your_user@rp4.local
 ##### Build host file
 nano /etc/ansible/host
 Example content:
+```
 [control]
 rp1.local ansible_connection=local
 
@@ -35,6 +41,7 @@ your_user@rp4.local
 [cube:children]
 control
 workers
+```
 
 ##### Test ansbible
 ansible cube -m ping
