@@ -6,8 +6,7 @@ services:
     environment:
       CEREBRO_PORT: 9209
     volumes:
-      - "/mnt/k3s/cerebro/cerebro_application.conf:/opt/cerebro/conf/application.conf"   
-      - "/mnt/k3s/cerebro/cerebro.db:/var/lib/cerebro/cerebro.db" 
+      - "/mnt/k3s/cerebro/cerebro_application.conf:/opt/cerebro/conf/application.conf"         
       - "/mnt/k3s/cerebro/logs:/opt/cerebro/logs"
     deploy:
       mode: replicated
