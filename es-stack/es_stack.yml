@@ -8,14 +8,13 @@ services:
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es02,es03
       - cluster.initial_master_nodes=es01,es02,es03
-      - ES_JAVA_OPTS="-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0  
-    mem_limit: 2g
+      - network.host=0.0.0.0      
     volumes:
       - /mnt/k3s/elasticsearch/es01/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es01/logs:/usr/share/elasticsearch/logs      
@@ -23,7 +22,13 @@ services:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     deploy:
+      resources:
+        limits:
+          memory: 2.5G
       placement:
         constraints:
           - "node.hostname==rp2.local"
@@ -44,15 +49,14 @@ services:
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es01,es03
       - cluster.initial_master_nodes=es01,es02,es03
-      - ES_JAVA_OPTS="-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0
-    mem_limit: 2g    
+      - network.host=0.0.0.0     
     volumes:
       - /mnt/k3s/elasticsearch/es02/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es02/logs:/usr/share/elasticsearch/logs      
@@ -60,7 +64,13 @@ services:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     deploy:
+      resources:
+        limits:
+          memory: 2.5G
       placement:
         constraints:
           - "node.hostname==rp3.local"
@@ -83,15 +93,14 @@ services:
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
-      - ES_JAVA_OPTS="-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0
-    mem_limit: 2g     
+      - network.host=0.0.0.0       
     volumes:
       - /mnt/k3s/elasticsearch/es03/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es03/logs:/usr/share/elasticsearch/logs      
@@ -99,7 +108,13 @@ services:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     deploy:
+      resources:
+        limits:
+          memory: 2.5G
       placement:
         constraints:
           - "node.hostname==rp4.local"
