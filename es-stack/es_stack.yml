@@ -8,13 +8,14 @@ services:
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es02,es03
       - cluster.initial_master_nodes=es01,es02,es03
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0      
+      - network.host=0.0.0.0  
+    mem_limit: 2g
     volumes:
       - /mnt/k3s/elasticsearch/es01/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es01/logs:/usr/share/elasticsearch/logs      
@@ -43,14 +44,15 @@ services:
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es01,es03
       - cluster.initial_master_nodes=es01,es02,es03
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=false
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0      
+      - network.host=0.0.0.0
+    mem_limit: 2g    
     volumes:
       - /mnt/k3s/elasticsearch/es02/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es02/logs:/usr/share/elasticsearch/logs      
@@ -88,7 +90,8 @@ services:
       - xpack.license.self_generated.type=trial
       - xpack.monitoring.collection.enabled=true
       - bootstrap.memory_lock=true
-      - network.host=0.0.0.0        
+      - network.host=0.0.0.0
+    mem_limit: 2g     
     volumes:
       - /mnt/k3s/elasticsearch/es03/data:/usr/share/elasticsearch/data
       - /mnt/k3s/elasticsearch/es03/logs:/usr/share/elasticsearch/logs      
