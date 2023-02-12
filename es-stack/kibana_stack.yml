@@ -1,0 +1,29 @@
+version: '3.8'
+
+services: 
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.11.2
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://es01:9200"
+    volumes:
+      - kibana-config:/usr/share/kibana/config
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.cerebro.entrypoints=web"
+        - "traefik.http.routers.cerebro.rule=Host(`kibana.j5watt.local`)"
+        - "traefik.http.services.cerebro.loadbalancer.server.port=5601"
+        - "traefik.docker.network=public"
+    networks:      
+      - public
+      - elastic    
+      
+networks:  
+  public:    
+    external: true
+  elastic:    
+    external: true
